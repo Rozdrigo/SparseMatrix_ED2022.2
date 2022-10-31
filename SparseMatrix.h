@@ -2,10 +2,10 @@
 // Francisco Gabriel da Silva Lima  Matricula: 514586
 // Rodrigo Silva Coelho             Matricula: 542101
 // ##################################################
-#ifndef SPARSEMATRIX.H
-#define SPARSEMATRIX .H
+#ifndef SPARSEMATRIX_H
+#define SPARSEMATRIX_H
 
-#include "NODE.H"
+#include "node.h"
 
 class SparseMatrix
 {
@@ -21,13 +21,13 @@ private:
 public:
     SparseMatrix(int m, int n);
 
-    ∼SparseMatrix();
+    ~SparseMatrix();
 
     void insert(int i, int j, double value);
 
     double get(int i, int j);
 
     void print();
-}
+};
 
 #endif
