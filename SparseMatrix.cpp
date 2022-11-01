@@ -25,7 +25,7 @@ SparseMatrix::SparseMatrix(int m, int n){
   cont = 0;
   aux = m_head;
   while(cont < lin){
-    aux->abaixo = new Node(cont, 0, m_head, aux->abaixo, NULL);
+    aux->abaixo = new Node(cont, 0, aux->abaixo, m_head, NULL);
     aux = aux->abaixo;
     cont++;
   }
