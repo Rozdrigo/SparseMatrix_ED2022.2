@@ -11,12 +11,9 @@ class SparseMatrix
 {
 private:
     Node *m_head;
-    Node *right;
-    Node *down;
 
     int lin;
     int col;
-    int value;
 
 public:
     SparseMatrix(int m, int n);
