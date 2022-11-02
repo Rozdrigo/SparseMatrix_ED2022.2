@@ -57,7 +57,7 @@ void SparseMatrix::insert(int i, int j, double value){
     aux_antes_do_inserido = aux_antes_do_inserido->direita;
 
   //Encontra sentinela da coluna j;
-  while(aux_lin_j0->direita != j)
+  while(aux_lin_j0->direita->coluna != j)
     aux_lin_j0 = aux_lin_j0->direita;
 
   //Inicializa um no auxiliar na posição [j, 0];
@@ -71,8 +71,8 @@ void SparseMatrix::insert(int i, int j, double value){
   if(aux_antes_do_inserido->direita->linha == i && aux_antes_do_inserido->direita->coluna == j){
     aux_antes_do_inserido->direita->valor = value;
   }else{
-    aux_antes_do_inserido->direita = new Node(i, j, aux_antes_do_inserido->direita, aux_lin_j0->abaixo, value);
-    aux_acima->abaixo = aux_antes_do_inserido->direita;
+    aux_antes_do_inserido->direita = new Node(i, j, aux_antes_do_inserido->direita, aux_acima_do_inserido->abaixo, value);
+    aux_acima_do_inserido->abaixo = aux_antes_do_inserido->direita;
   }
 
 }
