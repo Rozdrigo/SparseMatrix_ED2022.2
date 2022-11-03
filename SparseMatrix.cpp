@@ -10,13 +10,13 @@ SparseMatrix::SparseMatrix(int m, int n){
   this->lin = m;
   this->col = n;
 
-  m_head = new Node(0, 0, m_head, m_head, NULL);
+  m_head = new Node(0, 0, m_head, m_head, 0);
 
   //laço para inicializar as colunas
   int cont = 0;
   Node *aux = m_head;
   while(cont < col){
-    aux->direita = new Node(0, cont, m_head, aux->direita, NULL);
+    aux->direita = new Node(0, cont, m_head, aux->direita, 0);
     aux = aux->direita;
     cont++;
   }
@@ -25,7 +25,7 @@ SparseMatrix::SparseMatrix(int m, int n){
   cont = 0;
   aux = m_head;
   while(cont < lin){
-    aux->abaixo = new Node(cont, 0, aux->abaixo, m_head, NULL);
+    aux->abaixo = new Node(cont, 0, aux->abaixo, m_head, 0);
     aux = aux->abaixo;
     cont++;
   }
@@ -80,5 +80,22 @@ void SparseMatrix::insert(int i, int j, double value){
 double SparseMatrix::get(int i, int j){
 }
 
+// Ainda precisa ser implementando uma forma de imprimir os nós que não
+// foram preenchidos
+// Dessa forma só imprime os nós que foram alocados
 void SparseMatrix::print(){
+  //Ponteiro que aponta para o início de cada linha
+  Node *aux_lin = m_head->abaixo;
+  //Ponteiro que vai percorrer cada elemento da linha
+  Node *aux_col = aux_lin->direita;
+
+  while(aux_lin != m_head){
+    while(aux_col != aux_lin){
+      std::cout << aux_col->valor << " ";
+      aux_col = aux_col->direita;
+    }
+    std::cout << std::endl;
+    aux_lin = aux_lin->abaixo;
+    aux_col = aux_lin->direita;
+  }
 }
