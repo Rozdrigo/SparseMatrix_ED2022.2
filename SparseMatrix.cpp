@@ -125,22 +125,20 @@ double SparseMatrix::get(int i, int j){
   }else return 0;
 }
 
-// Ainda precisa ser implementando uma forma de imprimir os nós que não
-// foram preenchidos
-// Dessa forma só imprime os nós que foram alocados
 void SparseMatrix::print(){
-  //Ponteiro que aponta para o início de cada linha
-  Node *aux_lin = m_head->abaixo;
-  //Ponteiro que vai percorrer cada elemento da linha
-  Node *aux_col = aux_lin->direita;
+  //Criando nó auxiliar;
+  Node * aux = m_head->direita->abaixo;
 
-  while(aux_lin != m_head){
-    while(aux_col != aux_lin){
-      std::cout << aux_col->valor << " ";
-      aux_col = aux_col->direita;
+  //Executa uma vez para cada linha da matriz;
+  for(int i = 1; i<lin; i++){
+    //Executa uma vez para cada coluna da matriz;
+    for(int j = 1; j<col; j++){
+      if(aux->linha == i && aux->coluna == j){
+        std::cout << aux->valor << " ";
+        aux = aux->direita;
+      }else std::cout << "-";
     }
-    std::cout << std::endl;
-    aux_lin = aux_lin->abaixo;
-    aux_col = aux_lin->direita;
+    std::cout << endl;
+    aux = aux->direita->abaixo->direita;
   }
 }
