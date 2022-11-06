@@ -32,7 +32,36 @@ SparseMatrix::SparseMatrix(int m, int n){
 }
 
 SparseMatrix::~SparseMatrix(){
+  //Criando variaveis auxiliares de linha e coluna
+  Node *aux_linha = m_head;
+  Node *aux_coluna = m_head;
 
+  //Criando variaveis referencia
+  Node *referencia_i = m_head;
+  Node *referencia_j = m_head;
+
+  //Enquanto o nó abaixo do auxiliar for diferente de m_head faça;
+  while (aux_linha->abaixo != m_head){
+    //Definindo linha da coluna;
+    aux_coluna = aux_linha;
+    //Enquanto o nó a direita do auxiliar da coluna for diferente do nó sentinela da linha faça;
+    while (aux_coluna->direita != aux_linha)
+    {
+      //Salvando uma referencia para o nó seguinte;
+      referencia_j = aux_coluna->direita;
+      //Liberando espaço de memoria que aux_coluna aponta;
+      delete(aux_coluna);
+      //Atribuindo a aux_coluna a referencia do elemento seguinte que foi salva;
+      aux_coluna = referencia_j;
+    }
+    //Salvando uma referencia para o nó seguinte;
+    referencia_i = aux_linha->abaixo;
+    //Liberando espaço de memoria que aux_linha aponta;
+    delete(aux_linha);
+    //Atribuindo a aux_linha a referencia do elemento seguinte que foi salva;
+    aux_linha = referencia_i;
+  }
+  
 }
 
 void SparseMatrix::insert(int i, int j, double value){
