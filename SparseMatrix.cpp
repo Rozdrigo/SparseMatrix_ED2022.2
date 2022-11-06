@@ -32,11 +32,12 @@ SparseMatrix::SparseMatrix(int m, int n){
 }
 
 SparseMatrix::~SparseMatrix(){
+
 }
 
 void SparseMatrix::insert(int i, int j, double value){
 
-  //Tratativa de erro outrange
+  //Tratativa de erro out-range
   if(i > lin || j > col || i < 0 || j < 0){
     throw std::invalid_argument("Posição fora da matriz");
   }
@@ -78,6 +79,21 @@ void SparseMatrix::insert(int i, int j, double value){
 }
 
 double SparseMatrix::get(int i, int j){
+  Node *aux = m_head;
+
+  //Percorre a matriz até encontrar a linha i;
+  while (aux->linha != i)
+    aux = aux->abaixo;
+
+  //Percorre a linha i enquanto a coluna de aux for menor que j;
+  while (aux->coluna < j)
+    aux = aux->direita;
+  
+  //Verifica que foi possivel encontrar linha e coluna expecificada;
+  //Se não retorna 0;
+  if(aux->coluna == i && aux->linha == j){
+    return aux->valor;
+  }else return 0;
 }
 
 // Ainda precisa ser implementando uma forma de imprimir os nós que não
