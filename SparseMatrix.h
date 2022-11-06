@@ -2,6 +2,7 @@
 // Francisco Gabriel da Silva Lima  Matricula: 514586
 // Rodrigo Silva Coelho             Matricula: 542101
 // ##################################################
+
 #ifndef SPARSEMATRIX_H
 #define SPARSEMATRIX_H
 
