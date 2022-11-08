@@ -26,6 +26,11 @@ public:
     double get(int i, int j);
 
     void print();
+
+    SparseMatrix *somar(SparseMatrix &B);
+
+    SparseMatrix *multiplicar(SparseMatrix &B);
+
 };
 
 #endif

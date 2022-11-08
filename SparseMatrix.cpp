@@ -15,7 +15,7 @@ SparseMatrix::SparseMatrix(int m, int n){
   //laço para inicializar as colunas
   int cont = 0;
   Node *aux = m_head;
-  while(cont < col){
+  while(cont <= col){
     aux->direita = new Node(0, cont, m_head, aux->direita, 0);
     aux = aux->direita;
     cont++;
@@ -24,7 +24,7 @@ SparseMatrix::SparseMatrix(int m, int n){
   //laço para inicializar as linhas
   cont = 0;
   aux = m_head;
-  while(cont < lin){
+  while(cont <= lin){
     aux->abaixo = new Node(cont, 0, aux->abaixo, m_head, 0);
     aux = aux->abaixo;
     cont++;
@@ -103,6 +103,7 @@ void SparseMatrix::insert(int i, int j, double value){
   }else{
     aux_antes_do_inserido->direita = new Node(i, j, aux_antes_do_inserido->direita, aux_acima_do_inserido->abaixo, value);
     aux_acima_do_inserido->abaixo = aux_antes_do_inserido->direita;
+    std::cout << "Node inserido com valor: " << value << std::endl;
   }
 
 }
@@ -130,15 +131,47 @@ void SparseMatrix::print(){
   Node * aux = m_head->direita->abaixo;
 
   //Executa uma vez para cada linha da matriz;
-  for(int i = 1; i<lin; i++){
+  for(int i = 1; i<=lin; i++){
     //Executa uma vez para cada coluna da matriz;
-    for(int j = 1; j<col; j++){
+    for(int j = 1; j<=col; j++){
       if(aux->linha == i && aux->coluna == j){
         std::cout << aux->valor << " ";
         aux = aux->direita;
-      }else std::cout << "-";
+      }else std::cout << "0 ";
     }
-    std::cout << endl;
+    std::cout << std::endl;
     aux = aux->direita->abaixo->direita;
+  }
+}
+
+SparseMatrix *SparseMatrix::somar(SparseMatrix &B){
+  if(this->lin == B.lin && this->col == B.col){
+    SparseMatrix *c = new SparseMatrix(this->lin, this->col);
+    for(int i = 1; i <= lin; i++){
+      for(int j = 1; j <= col; j++){
+        c->insert(i, j, this->get(i, j) + B.get(i, j));
+      }
+    }
+    return c;
+  }else{
+    return nullptr;
+  }
+}
+
+SparseMatrix *SparseMatrix::multiplicar(SparseMatrix &B){
+  if(this->col == B.lin){
+    SparseMatrix *c = new SparseMatrix(this->lin, this->col);
+    for(int i = 1; i <= c->lin; i++){
+      for(int j = 1; j <= c->col; j++){
+        double soma = 0;
+        for(int k = 1; k <= c->lin; k++){
+          soma += this->get(i, k) * B.get(k, j);
+        }
+        c->insert(i, j, soma);
+      }
+    }
+    return c;
+  }else{
+    return nullptr;
   }
 }
