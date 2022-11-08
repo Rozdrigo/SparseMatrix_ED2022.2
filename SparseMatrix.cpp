@@ -15,7 +15,7 @@ SparseMatrix::SparseMatrix(int m, int n){
   //laço para inicializar as colunas
   int cont = 0;
   Node *aux = m_head;
-  while(cont < col){
+  while(cont <= col){
     aux->direita = new Node(0, cont, m_head, aux->direita, 0);
     aux = aux->direita;
     cont++;
@@ -24,7 +24,7 @@ SparseMatrix::SparseMatrix(int m, int n){
   //laço para inicializar as linhas
   cont = 0;
   aux = m_head;
-  while(cont < lin){
+  while(cont <= lin){
     aux->abaixo = new Node(cont, 0, aux->abaixo, m_head, 0);
     aux = aux->abaixo;
     cont++;
