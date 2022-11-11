@@ -127,8 +127,6 @@ double SparseMatrix::get(int i, int j) {
   // Se não retorna 0;
 
   if (aux->coluna == j && aux->linha == i) {
-    std::cout << (aux->coluna == j && aux->linha == i)
-              << std::to_string(aux->valor) << std::endl;
     return aux->valor;
   }
   return 0;
@@ -150,34 +148,35 @@ void SparseMatrix::print() {
   }
 }
 
-SparseMatrix *SparseMatrix::somar(SparseMatrix &B){
-  if(this->lin == B.lin && this->col == B.col){
-    SparseMatrix *c = new SparseMatrix(this->lin, this->col);
-    for(int i = 1; i <= lin; i++){
-      for(int j = 1; j <= col; j++){
-        c->insert(i, j, this->get(i, j) + B.get(i, j));
+SparseMatrix SparseMatrix::somar(SparseMatrix &B) {
+  if (this->lin == B.lin && this->col == B.col) {
+    for (int i = 1; i <= lin; i++) {
+      for (int j = 1; j <= col; j++) {
+        insert(i, j, get(i, j) + B.get(i, j));
+        std::cout << get(i, j) + B.get(i, j) << " " << i << " " << j
+                  << std::endl;
       }
     }
-    return c;
-  }else{
-    return nullptr;
+    return *this;
+  } else {
+    return SparseMatrix(0, 0);
   }
 }
 
-SparseMatrix *SparseMatrix::multiplicar(SparseMatrix &B){
-  if(this->col == B.lin){
+SparseMatrix *SparseMatrix::multiplicar(SparseMatrix &B) {
+  if (this->col == B.lin) {
     SparseMatrix *c = new SparseMatrix(this->lin, this->col);
-    for(int i = 1; i <= c->lin; i++){
-      for(int j = 1; j <= c->col; j++){
+    for (int i = 1; i <= c->lin; i++) {
+      for (int j = 1; j <= c->col; j++) {
         double soma = 0;
-        for(int k = 1; k <= c->lin; k++){
+        for (int k = 1; k <= c->lin; k++) {
           soma += this->get(i, k) * B.get(k, j);
         }
         c->insert(i, j, soma);
       }
     }
     return c;
-  }else{
+  } else {
     return nullptr;
   }
 }

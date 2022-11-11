@@ -27,7 +27,7 @@ public:
 
     void print();
 
-    SparseMatrix *somar(SparseMatrix &B);
+    SparseMatrix somar(SparseMatrix &B);
 
     SparseMatrix *multiplicar(SparseMatrix &B);
 
