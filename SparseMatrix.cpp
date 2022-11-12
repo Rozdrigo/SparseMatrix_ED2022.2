@@ -153,7 +153,7 @@ SparseMatrix SparseMatrix::somar(SparseMatrix &B) {
     for (int i = 1; i <= lin; i++) {
       for (int j = 1; j <= col; j++) {
         insert(i, j, get(i, j) + B.get(i, j));
-        std::cout << get(i, j) + B.get(i, j) << " " << i << " " << j
+        std::cout << get(i, j) << " " << i << " " << j
                   << std::endl;
       }
     }
