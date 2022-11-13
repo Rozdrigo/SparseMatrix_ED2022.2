@@ -89,7 +89,7 @@ void SparseMatrix::insert(int i, int j, double value) {
     aux_antes_do_inserido = aux_antes_do_inserido->direita;
 
   // Encontra sentinela da coluna j;
-  while (aux_lin_j0->direita->coluna != j)
+  while (aux_lin_j0->coluna != j)
     aux_lin_j0 = aux_lin_j0->direita;
 
   // Inicializa um no auxiliar na posição [j, 0];
@@ -98,17 +98,16 @@ void SparseMatrix::insert(int i, int j, double value) {
   // Encontra e atribui a aux_lin_j0 a maior posição menor que i;
   while (aux_acima_do_inserido->abaixo->linha < i &&
          aux_acima_do_inserido->abaixo != aux_lin_j0)
-    aux_lin_j0 = aux_lin_j0->abaixo;
+    aux_acima_do_inserido = aux_acima_do_inserido->abaixo;
 
   // Atualiza o valor de um nó existente ou cria um novo e adiciona-o à lista;
   if (aux_antes_do_inserido->direita->linha == i &&
       aux_antes_do_inserido->direita->coluna == j) {
     aux_antes_do_inserido->direita->valor = value;
   } else {
-    aux_antes_do_inserido->direita =
-        new Node(i, j, aux_antes_do_inserido->direita,
-                 aux_acima_do_inserido->abaixo, value);
-    aux_acima_do_inserido->abaixo = aux_antes_do_inserido->direita->direita;
+    Node *aux = new Node(i, j, aux_antes_do_inserido, aux_acima_do_inserido, value);
+    aux_antes_do_inserido->direita = aux;
+    aux_acima_do_inserido->abaixo = aux;
   }
 }
 
@@ -153,8 +152,6 @@ SparseMatrix SparseMatrix::somar(SparseMatrix &B) {
     for (int i = 1; i <= lin; i++) {
       for (int j = 1; j <= col; j++) {
         insert(i, j, get(i, j) + B.get(i, j));
-        std::cout << get(i, j) << " " << i << " " << j
-                  << std::endl;
       }
     }
     return *this;
