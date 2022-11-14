@@ -160,20 +160,19 @@ SparseMatrix SparseMatrix::somar(SparseMatrix &B) {
   }
 }
 
-SparseMatrix *SparseMatrix::multiplicar(SparseMatrix &B) {
+SparseMatrix SparseMatrix::multiplicar(SparseMatrix &B) {
   if (this->col == B.lin) {
-    SparseMatrix *c = new SparseMatrix(this->lin, this->col);
-    for (int i = 1; i <= c->lin; i++) {
-      for (int j = 1; j <= c->col; j++) {
+    for (int i = 1; i <= B.lin; i++) {
+      for (int j = 1; j <= this->col; j++) {
         double soma = 0;
-        for (int k = 1; k <= c->lin; k++) {
+        for (int k = 1; k <= B.lin; k++) {
           soma += this->get(i, k) * B.get(k, j);
         }
-        c->insert(i, j, soma);
+        insert(i, j, soma);
       }
     }
-    return c;
+    return *this;
   } else {
-    return nullptr;
+    return SparseMatrix(0, 0);
   }
 }
