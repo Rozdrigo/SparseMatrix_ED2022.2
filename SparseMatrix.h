@@ -29,7 +29,7 @@ public:
 
     SparseMatrix somar(SparseMatrix &B);
 
-    SparseMatrix *multiplicar(SparseMatrix &B);
+    SparseMatrix multiplicar(SparseMatrix &B);
 
 };
 
