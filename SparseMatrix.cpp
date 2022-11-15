@@ -105,7 +105,7 @@ void SparseMatrix::insert(int i, int j, double value) {
       aux_antes_do_inserido->direita->coluna == j) {
     aux_antes_do_inserido->direita->valor = value;
   } else {
-    Node *aux = new Node(i, j, aux_antes_do_inserido, aux_acima_do_inserido, value);
+    Node *aux = new Node(i, j, aux_antes_do_inserido->direita, aux_acima_do_inserido->abaixo, value);
     aux_antes_do_inserido->direita = aux;
     aux_acima_do_inserido->abaixo = aux;
   }
@@ -133,17 +133,17 @@ double SparseMatrix::get(int i, int j) {
 
 void SparseMatrix::print() {
   Node *aux = m_head;
-  for (int i = 0; i < lin; i++) {
-    aux = aux->abaixo;
-    Node *colaux = aux->direita;
-    for (int j = 1; j <= col; j++) {
+  for (int i = 0; i <= lin; i++) {
+    Node *colaux = aux;
+    for (int j = 0; j <= col; j++) {
       if (colaux->coluna == j) {
-        std::cout << colaux->valor << " ";
+        std::cout << "[" << colaux->valor << " " << colaux->coluna << " " << colaux->linha << "] ";
         colaux = colaux->direita;
       } else
-        std::cout << 0 << " ";
+        std::cout << "[" << "X" << " " << i << " " << j << "] ";
     }
     std::cout << std::endl;
+    aux = aux->abaixo;
   }
 }
 
