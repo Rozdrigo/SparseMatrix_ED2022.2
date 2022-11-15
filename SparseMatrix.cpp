@@ -132,15 +132,15 @@ double SparseMatrix::get(int i, int j) {
 }
 
 void SparseMatrix::print() {
-  Node *aux = m_head;
-  for (int i = 0; i <= lin; i++) {
-    Node *colaux = aux;
-    for (int j = 0; j <= col; j++) {
+  Node *aux = m_head->abaixo;
+  for (int i = 1; i <= lin; i++) {
+    Node *colaux = aux->direita;
+    for (int j = 1; j <= col; j++) {
       if (colaux->coluna == j) {
-        std::cout << "[" << colaux->valor << " " << colaux->coluna << " " << colaux->linha << "] ";
+        std::cout << colaux->valor << " ";
         colaux = colaux->direita;
       } else
-        std::cout << "[" << "X" << " " << i << " " << j << "] ";
+        std::cout << 0 << " ";
     }
     std::cout << std::endl;
     aux = aux->abaixo;
@@ -151,12 +151,12 @@ SparseMatrix SparseMatrix::somar(SparseMatrix &B) {
   if (this->lin == B.lin && this->col == B.col) {
     for (int i = 1; i <= lin; i++) {
       for (int j = 1; j <= col; j++) {
-        insert(i, j, get(i, j) + B.get(i, j));
+        this->insert(i, j, this->get(i, j) + B.get(i, j));
       }
     }
     return *this;
   } else {
-    return SparseMatrix(0, 0);
+      throw std::invalid_argument("Operação invalida");
   }
 }
 
@@ -168,11 +168,11 @@ SparseMatrix SparseMatrix::multiplicar(SparseMatrix &B) {
         for (int k = 1; k <= B.lin; k++) {
           soma += this->get(i, k) * B.get(k, j);
         }
-        insert(i, j, soma);
+        this->insert(i, j, soma);
       }
     }
     return *this;
   } else {
-    return SparseMatrix(0, 0);
+    throw std::invalid_argument("Operação invalida");
   }
 }

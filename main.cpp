@@ -1,49 +1,45 @@
 #include <iostream>
 #include "SparseMatrix.h"
 #include <fstream>
+#include <string.h>
 using namespace std;
 
-SparseMatrix* readSparseMatrix(std::string nome_do_arquivo){
+SparseMatrix readSparseMatrix(std::string nome_do_arquivo){
   SparseMatrix *mat;
-
-  int m = 0, n = 0;
-  int l = 0, c = 0;
+  int m = 0, n = 0, l = 0, c = 0;
   double val = 0.0;
 
   ifstream arquivo;
   string linha;
 
   arquivo.open(nome_do_arquivo);
-
   if(arquivo.is_open()){
-<<<<<<< HEAD
-    
-=======
-    getline(arquivo, linha);
-    m = linha[0];
-    n = linha[1];
-    cout << m << " " << n << endl;
+    arquivo >> m >> n;
     mat = new SparseMatrix(m, n);
-    while(getline(arquivo, linha)){
-      l = linha[0];
-      c = linha[1];
-      val = linha[2];
-      cout << l << " " << c << " " << val << endl;
+    while (arquivo >> l >> c >> val)
+    {
       mat->insert(l, c, val);
     }
->>>>>>> d7918bd11018960497058b2033b68af25a79119d
     arquivo.close();
   }else{
     cout << "Não foi possivel abrir o arquivo" << endl;
   }
-  return mat;
+  return *mat;
 }
-
 
 int main(){
-  readSparseMatrix("matrixA.txt");
-<<<<<<< HEAD
+  auto a = SparseMatrix(2, 2);
+  auto b = SparseMatrix(2, 2);
+
+  a.insert(1, 1, -1);
+  a.insert(1, 2, 3);
+  a.insert(2, 1, 4);
+  a.insert(2, 2, 2);
+
+  b.insert(1, 1, 1);
+  b.insert(1, 2, 2);
+  b.insert(2, 1, 3);
+  b.insert(2, 2, 4);
+
+  auto c = a.multiplicar(b);
 }
-=======
-}
->>>>>>> d7918bd11018960497058b2033b68af25a79119d
